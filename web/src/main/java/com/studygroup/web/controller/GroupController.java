@@ -1,6 +1,7 @@
 package com.studygroup.web.controller;
 
 import com.studygroup.web.dto.GroupDto;
+import com.studygroup.web.models.Group;
 import com.studygroup.web.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,5 +24,12 @@ public class GroupController {
         List<GroupDto> groups = groupService.findAllGroups();
         model.addAttribute("groups", groups);
         return "groups-list";
+    }
+
+    @GetMapping("/groups/new")
+    public String createGroupForm(Model model){
+        Group group = new Group();
+        model.addAttribute("group", group);
+        return "groups-create";
     }
 }
