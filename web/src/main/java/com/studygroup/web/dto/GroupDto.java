@@ -11,7 +11,7 @@ public class GroupDto {
     private Long id;
     private String title;
     private String photoUrl;
-    private String context;
+    private String content;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
 }

@@ -25,12 +25,17 @@ public class GroupServiceImpl implements GroupService {
         return groups.stream().map((group) -> mapToGroupDto(group)).collect(Collectors.toList());
     }
 
+    @Override
+    public Group saveGroup(Group group) {
+        return groupRepository.save(group);
+    }
+
     private GroupDto mapToGroupDto(Group group){
         GroupDto groupDto = GroupDto.builder()
                 .id(group.getId())
                 .title(group.getTitle())
                 .photoUrl(group.getPhotoUrl())
-                .context(group.getContext())
+                .content(group.getContent())
                 .createdOn(group.getCreatedOn())
                 .updatedOn(group.getUpdatedOn())
                 .build();
