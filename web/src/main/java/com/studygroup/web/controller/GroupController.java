@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -38,6 +39,20 @@ public class GroupController {
     @PostMapping("/groups/new")
     public String saveGroup(@ModelAttribute("group") Group group){
         groupService.saveGroup(group);
+        return "redirect:/groups";
+    }
+
+    @GetMapping("/groups/{groupId}/edit")
+    public String editGroupForm(@PathVariable("groupId") long groupId, Model model){
+        GroupDto group = groupService.findGroupById(groupId);
+        model.addAttribute("group", group);
+        return "groups-edit";
+    }
+
+    @PostMapping("/groups/{groupId}/edit")
+    public String updateGroup(@PathVariable("groupId") long groupId, @ModelAttribute("group") GroupDto group){
+        group.setId(groupId);
+        groupService.updateGroup(group);
         return "redirect:/groups";
     }
 }

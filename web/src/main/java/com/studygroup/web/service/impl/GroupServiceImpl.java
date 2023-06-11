@@ -30,6 +30,30 @@ public class GroupServiceImpl implements GroupService {
         return groupRepository.save(group);
     }
 
+    @Override
+    public GroupDto findGroupById(long groupId) {
+        Group group = groupRepository.findById(groupId).get();
+        return mapToGroupDto(group);
+    }
+
+    @Override
+    public void updateGroup(GroupDto groupDto) {
+        Group group = mapToGroup(groupDto);
+        groupRepository.save(group);
+    }
+
+    private Group mapToGroup(GroupDto group) {
+        Group groupDto = Group.builder()
+                .id(group.getId())
+                .title(group.getTitle())
+                .photoUrl(group.getPhotoUrl())
+                .content(group.getContent())
+                .createdOn(group.getCreatedOn())
+                .updatedOn(group.getUpdatedOn())
+                .build();
+        return groupDto;
+    }
+
     private GroupDto mapToGroupDto(Group group){
         GroupDto groupDto = GroupDto.builder()
                 .id(group.getId())
