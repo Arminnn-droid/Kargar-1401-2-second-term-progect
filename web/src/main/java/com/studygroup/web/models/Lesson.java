@@ -13,23 +13,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
-@Table(name = "StudyGroups")
-public class Group {
+public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
+    private String name;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private String lecture;
     private String photoUrl;
-    private String content;
     @CreationTimestamp
     private LocalDateTime createdOn;
     @UpdateTimestamp
     private LocalDateTime updatedOn;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE)
-    private Set<Lesson> lessons = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "club_id", nullable = false)
+    private Group group;
 }
