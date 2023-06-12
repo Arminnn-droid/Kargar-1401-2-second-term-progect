@@ -32,6 +32,6 @@ public class LessonController {
     @PostMapping("/lessons/{groupId}")
     public String createLesson(@PathVariable("groupId") Long groupId, @ModelAttribute("lesson") LessonDto lessonDto, Model model){
         lessonService.createLesson(groupId, lessonDto);
-        return "redirect:/groups" + groupId;
+        return "redirect:/groups/" + groupId;
     }
 }
