@@ -3,9 +3,11 @@ package com.studygroup.web.controller;
 import com.studygroup.web.dto.GroupDto;
 import com.studygroup.web.models.Group;
 import com.studygroup.web.service.GroupService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,8 +39,12 @@ public class GroupController {
     }
 
     @PostMapping("/groups/new")
-    public String saveGroup(@ModelAttribute("group") Group group){
-        groupService.saveGroup(group);
+    public String saveGroup(@Valid @ModelAttribute("group") GroupDto groupDto, BindingResult result, Model model){
+        if (result.hasErrors()){
+            model.addAttribute("group", groupDto);
+            return "groups-create";
+        }
+        groupService.saveGroup(groupDto);
         return "redirect:/groups";
     }
 
@@ -50,7 +56,12 @@ public class GroupController {
     }
 
     @PostMapping("/groups/{groupId}/edit")
-    public String updateGroup(@PathVariable("groupId") long groupId, @ModelAttribute("group") GroupDto group){
+    public String updateGroup(@PathVariable("groupId") long groupId,
+                              @Valid @ModelAttribute("group") GroupDto group,
+                              BindingResult result){
+        if (result.hasErrors()){
+            return "groups-edit";
+        }
         group.setId(groupId);
         groupService.updateGroup(group);
         return "redirect:/groups";

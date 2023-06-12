@@ -6,7 +6,7 @@ import com.studygroup.web.models.Group;
 
 public interface GroupService {
     List<GroupDto> findAllGroups();
-    Group saveGroup(Group group);
+    Group saveGroup(GroupDto groupDto);
 
     GroupDto findGroupById(long groupId);
 

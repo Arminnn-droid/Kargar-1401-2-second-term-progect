@@ -26,7 +26,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group saveGroup(Group group) {
+    public Group saveGroup(GroupDto groupDto) {
+        Group group = mapToGroup(groupDto);
         return groupRepository.save(group);
     }
 
