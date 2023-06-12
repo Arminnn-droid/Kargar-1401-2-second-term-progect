@@ -28,23 +28,21 @@
             <div class="small text-muted" th:text="${group.createdOn}"></div>
             <h2 class="card-title">About this study group</h2>
             <p class="card-text" th:text="${group.content}"></p>
-            <div th:if="${user.id} == ${group.createdBy.id}">
               <a class="btn btn-primary" th:href="@{/groups/{groupId}/delete(groupId=${group.id})}">Delete</a>
               <a class="btn btn-primary" th:href="@{/lessons/{groupId}/new(groupId=${group.id})}">Create lesson</a>
-            </div>
           </div>
         </div>
         <!-- Nested row for non-featured blog posts-->
         <div class="row">
           <div class="col-lg-6">
             <!-- Blog post-->
-            <div th:each="event :${club.events}" class="card mb-4">
-              <a href="#!"><img class="card-img-top" th:src="${event.photoUrl}" alt="..." /></a>
+            <div th:each="lesson :${group.lessons}" class="card mb-4">
+              <a href="#!"><img class="card-img-top" th:src="${lesson.photoUrl}" alt="..." /></a>
               <div class="card-body">
                 <div class="small text-muted">January 1, 2022</div>
-                <h2 th:text="${event.name}"class="card-title h4"></h2>
+                <h2 th:text="${lesson.name}" class="card-title h4"></h2>
                 <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                <a class="btn btn-primary" th:href="@{/events/{eventId}(eventId=${event.id})}">More</a>
+                <a class="btn btn-primary" th:href="@{/lessons/{lessonId}(lessonId=${lesson.id})}">More</a>
               </div>
             </div>
             <!-- Blog post-->
