@@ -66,4 +66,16 @@ public class GroupController {
         groupService.updateGroup(group);
         return "redirect:/groups";
     }
+
+    @GetMapping("/groups/{groupId}")
+    public String groupDetail(@PathVariable("groupId") long groupId, Model model){
+        GroupDto groupDto = groupService.findGroupById(groupId);
+        model.addAttribute("group", groupDto);
+        return "groups-detail";
+    }
+
+    @GetMapping("/groups/{groupId}/delete")
+    public String deleteGroup(@PathVariable("groupId") long groupId){
+        groupService.delete(groupId);
+    }
 }
