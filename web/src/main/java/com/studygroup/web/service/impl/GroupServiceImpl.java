@@ -48,6 +48,12 @@ public class GroupServiceImpl implements GroupService {
         groupRepository.deleteById(groupId);
     }
 
+    @Override
+    public List<GroupDto> searchGroups(String query) {
+        List<Group> groups = groupRepository.searchGroups(query);
+        return groups.stream().map(group -> mapToGroupDto(group)).collect(Collectors.toList());
+    }
+
     private Group mapToGroup(GroupDto group) {
         Group groupDto = Group.builder()
                 .id(group.getId())

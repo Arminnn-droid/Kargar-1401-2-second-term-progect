@@ -15,6 +15,11 @@
                 <p class="lead fw-normal text-muted mb-0">Students found in your area!</p>
             </div>
             <div class="row gx-5">
+                <div>
+                    <form th:action="@{/groups/search}" class="form-inline my-2 my-lg-0 mb-3">
+                        <input name="query" class="form-control me-sm-2 mb-5" type="search" placeholder="search for study groups" aria-label="search">
+                    </form>
+                </div>
                 <div th:each="group :${groups}" class="col-lg-6 mb-2">
                     <hr>
                     <div class="position-relative mb-3">
