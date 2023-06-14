@@ -10,4 +10,6 @@ public interface LessonService {
     List<LessonDto> findAllLessons();
 
     LessonDto findByLessonId(Long lessonId);
+
+    void updateLesson(LessonDto lessonDto);
 }

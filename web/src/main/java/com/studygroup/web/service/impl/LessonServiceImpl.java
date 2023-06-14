@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.studygroup.web.mapper.GroupMapper.mapToGroup;
 import static com.studygroup.web.mapper.LessonMapper.mapToLesson;
 import static com.studygroup.web.mapper.LessonMapper.mapToLessonDto;
 
@@ -44,5 +45,11 @@ public class LessonServiceImpl implements LessonService {
     public LessonDto findByLessonId(Long lessonId) {
         Lesson lesson = lessonRepository.findById(lessonId).get();
         return mapToLessonDto(lesson);
+    }
+
+    @Override
+    public void updateLesson(LessonDto lessonDto) {
+        Lesson lesson = mapToLesson(lessonDto);
+        lessonRepository.save(lesson);
     }
 }

@@ -1,12 +1,15 @@
 package com.studygroup.web.controller;
 
+import com.studygroup.web.dto.GroupDto;
 import com.studygroup.web.dto.LessonDto;
 import com.studygroup.web.models.Lesson;
 import com.studygroup.web.service.LessonService;
 import com.studygroup.web.service.impl.LessonServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,9 +49,29 @@ public class LessonController {
 
     @GetMapping("/lessons/{lessonId}/")
     public String viewLesson(@PathVariable("lessonId") Long lessonId, Model model){
-        LessonDto lessonDto = lessonService.findByLessonId(lessonId);
-        model.addAttribute("lessonDto", lessonDto);
+        LessonDto lesson = lessonService.findByLessonId(lessonId);
+        model.addAttribute("lesson", lesson);
         return "lesson-detail";
     }
+    @GetMapping("/lessons/{lessonId}/edit")
+    public String editLessonForm(@PathVariable("lessonId") Long lessonId, Model model){
+        LessonDto lesson = lessonService.findByLessonId(lessonId);
+        model.addAttribute("lesson", lesson);
+        return "lessons-edit";
+    }
 
+    @PostMapping("/lessons/{lessonId}/edit")
+    public String updateLesson(@PathVariable("lessonId") long lessonId,
+                              @Valid @ModelAttribute("lesson") LessonDto lesson,
+                              BindingResult result, Model model){
+        if (result.hasErrors()){
+            model.addAttribute("lesson", lesson);
+            return "lessons-edit";
+        }
+        LessonDto lessonDto = lessonService.findByLessonId(lessonId);
+        lesson.setId(lessonId);
+        lesson.setGroup(lessonDto.getGroup());
+        lessonService.updateLesson(lesson);
+        return "redirect:/lessons";
+    }
 }

@@ -55,8 +55,9 @@ public class GroupController {
     @PostMapping("/groups/{groupId}/edit")
     public String updateGroup(@PathVariable("groupId") long groupId,
                               @Valid @ModelAttribute("group") GroupDto group,
-                              BindingResult result){
+                              BindingResult result, Model model){
         if (result.hasErrors()){
+            model.addAttribute("group", group);
             return "groups-edit";
         }
         group.setId(groupId);

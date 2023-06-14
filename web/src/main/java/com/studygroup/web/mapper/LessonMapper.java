@@ -14,6 +14,7 @@ public class LessonMapper {
                 .createdOn(lessonDto.getCreatedOn())
                 .updatedOn(lessonDto.getUpdatedOn())
                 .photoUrl(lessonDto.getPhotoUrl())
+                .group(lessonDto.getGroup())
                 .build();
     }
 
@@ -27,6 +28,7 @@ public class LessonMapper {
                 .createdOn(lesson.getCreatedOn())
                 .updatedOn(lesson.getUpdatedOn())
                 .photoUrl(lesson.getPhotoUrl())
+                .group(lesson.getGroup())
                 .build();
     }
 }

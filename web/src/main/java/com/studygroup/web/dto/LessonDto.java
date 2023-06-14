@@ -1,4 +1,5 @@
 package com.studygroup.web.dto;
+import com.studygroup.web.models.Group;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +23,5 @@ public class LessonDto {
     private String photoUrl;
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
+    private Group group;
 }

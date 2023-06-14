@@ -21,8 +21,8 @@
                         <img class="img-fluid rounded-3 mb-3" th:src="${lesson.photoUrl}" alt="..." />
                         <a th:text="${lesson.name}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!"></a>
                     </div>
-                    <a th:href="@{/lessons/{lessonId}(lessonId=${lesson.id})}" class="btn btn-primary">view</a>
-                    <a class="btn btn-primary">Edit</a>
+                    <a th:href="@{/lessons/{lessonId}(lessonId=${lesson.id})}" class="btn btn-primary">View</a>
+                    <a th:href="@{/lessons/{lessonId}/edit(lessonId=${lesson.id})}" class="btn btn-primary">Edit</a>
                     <hr>
                 </div>
             </div>
