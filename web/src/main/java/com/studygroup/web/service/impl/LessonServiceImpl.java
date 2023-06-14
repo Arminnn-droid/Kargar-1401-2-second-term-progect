@@ -9,6 +9,12 @@ import com.studygroup.web.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.studygroup.web.mapper.LessonMapper.mapToLesson;
+import static com.studygroup.web.mapper.LessonMapper.mapToLessonDto;
+
 @Service
 public class LessonServiceImpl implements LessonService {
     private LessonRepository lessonRepository;
@@ -28,16 +34,9 @@ public class LessonServiceImpl implements LessonService {
         lessonRepository.save(lesson);
     }
 
-    private Lesson mapToLesson(LessonDto lessonDto){
-        return Lesson.builder()
-                .id(lessonDto.getId())
-                .name(lessonDto.getName())
-                .lecture(lessonDto.getLecture())
-                .startTime(lessonDto.getStartTime())
-                .endTime(lessonDto.getEndTime())
-                .createdOn(lessonDto.getCreatedOn())
-                .updatedOn(lessonDto.getUpdatedOn())
-                .photoUrl(lessonDto.getPhotoUrl())
-                .build();
+    @Override
+    public List<LessonDto> findAllLessons() {
+        List<Lesson> lessons = lessonRepository.findAll();
+        return lessons.stream().map((lesson) -> mapToLessonDto(lesson)).collect(Collectors.toList());
     }
 }

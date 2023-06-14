@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.studygroup.web.mapper.GroupMapper.mapToGroup;
+import static com.studygroup.web.mapper.GroupMapper.mapToGroupDto;
+
 @Service
 public class GroupServiceImpl implements GroupService {
     private GroupRepository groupRepository;
@@ -52,29 +55,5 @@ public class GroupServiceImpl implements GroupService {
     public List<GroupDto> searchGroups(String query) {
         List<Group> groups = groupRepository.searchGroups(query);
         return groups.stream().map(group -> mapToGroupDto(group)).collect(Collectors.toList());
-    }
-
-    private Group mapToGroup(GroupDto group) {
-        Group groupDto = Group.builder()
-                .id(group.getId())
-                .title(group.getTitle())
-                .photoUrl(group.getPhotoUrl())
-                .content(group.getContent())
-                .createdOn(group.getCreatedOn())
-                .updatedOn(group.getUpdatedOn())
-                .build();
-        return groupDto;
-    }
-
-    private GroupDto mapToGroupDto(Group group){
-        GroupDto groupDto = GroupDto.builder()
-                .id(group.getId())
-                .title(group.getTitle())
-                .photoUrl(group.getPhotoUrl())
-                .content(group.getContent())
-                .createdOn(group.getCreatedOn())
-                .updatedOn(group.getUpdatedOn())
-                .build();
-        return groupDto;
     }
 }

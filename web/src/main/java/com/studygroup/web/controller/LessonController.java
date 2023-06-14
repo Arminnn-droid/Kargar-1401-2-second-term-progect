@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class LessonController {
     private LessonService lessonService;
@@ -34,4 +36,12 @@ public class LessonController {
         lessonService.createLesson(groupId, lessonDto);
         return "redirect:/groups/" + groupId;
     }
+
+    @GetMapping("/lessons")
+    public String lessonList(Model model){
+        List<LessonDto> lessons = lessonService.findAllLessons();
+        model.addAttribute("lessons", lessons);
+        return "lessons-list";
+    }
+
 }
