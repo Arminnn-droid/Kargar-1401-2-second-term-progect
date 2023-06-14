@@ -39,4 +39,10 @@ public class LessonServiceImpl implements LessonService {
         List<Lesson> lessons = lessonRepository.findAll();
         return lessons.stream().map((lesson) -> mapToLessonDto(lesson)).collect(Collectors.toList());
     }
+
+    @Override
+    public LessonDto findByLessonId(Long lessonId) {
+        Lesson lesson = lessonRepository.findById(lessonId).get();
+        return mapToLessonDto(lesson);
+    }
 }

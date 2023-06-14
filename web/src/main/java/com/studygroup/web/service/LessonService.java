@@ -8,4 +8,6 @@ public interface LessonService {
     void createLesson(Long groupId, LessonDto lessonDto);
 
     List<LessonDto> findAllLessons();
+
+    LessonDto findByLessonId(Long lessonId);
 }

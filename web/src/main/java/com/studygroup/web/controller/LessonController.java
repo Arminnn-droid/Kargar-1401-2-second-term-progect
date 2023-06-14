@@ -44,4 +44,11 @@ public class LessonController {
         return "lessons-list";
     }
 
+    @GetMapping("/lessons/{lessonId}/")
+    public String viewLesson(@PathVariable("lessonId") Long lessonId, Model model){
+        LessonDto lessonDto = lessonService.findByLessonId(lessonId);
+        model.addAttribute("lessonDto", lessonDto);
+        return "lesson-detail";
+    }
+
 }
