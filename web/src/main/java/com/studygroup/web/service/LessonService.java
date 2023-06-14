@@ -12,4 +12,6 @@ public interface LessonService {
     LessonDto findByLessonId(Long lessonId);
 
     void updateLesson(LessonDto lessonDto);
+
+    void deleteLesson(Long lessonId);
 }

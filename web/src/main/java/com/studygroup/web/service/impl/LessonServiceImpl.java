@@ -52,4 +52,9 @@ public class LessonServiceImpl implements LessonService {
         Lesson lesson = mapToLesson(lessonDto);
         lessonRepository.save(lesson);
     }
+
+    @Override
+    public void deleteLesson(Long lessonId) {
+        lessonRepository.deleteById(lessonId);
+    }
 }
