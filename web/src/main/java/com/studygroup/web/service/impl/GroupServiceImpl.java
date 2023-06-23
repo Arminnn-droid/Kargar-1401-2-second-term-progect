@@ -2,7 +2,10 @@ package com.studygroup.web.service.impl;
 
 import com.studygroup.web.dto.GroupDto;
 import com.studygroup.web.models.Group;
+import com.studygroup.web.models.UserEntity;
 import com.studygroup.web.repository.GroupRepository;
+import com.studygroup.web.repository.UserRepository;
+import com.studygroup.web.security.SecurityUtil;
 import com.studygroup.web.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +19,12 @@ import static com.studygroup.web.mapper.GroupMapper.mapToGroupDto;
 @Service
 public class GroupServiceImpl implements GroupService {
     private GroupRepository groupRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public GroupServiceImpl(GroupRepository groupRepository) {
+    public GroupServiceImpl(GroupRepository groupRepository, UserRepository userRepository) {
         this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -30,7 +35,10 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group saveGroup(GroupDto groupDto) {
+        String username = SecurityUtil.getSessionUser().getUsername();
+        UserEntity user = userRepository.findByUsername(username);
         Group group = mapToGroup(groupDto);
+        group.setCreatedBy(user);
         return groupRepository.save(group);
     }
 
@@ -42,7 +50,10 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void updateGroup(GroupDto groupDto) {
+        String username = SecurityUtil.getSessionUser().getUsername();
+        UserEntity user = userRepository.findByUsername(username);
         Group group = mapToGroup(groupDto);
+        group.setCreatedBy(user);
         groupRepository.save(group);
     }
 
