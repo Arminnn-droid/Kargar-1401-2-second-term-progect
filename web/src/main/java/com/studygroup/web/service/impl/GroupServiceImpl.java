@@ -35,7 +35,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group saveGroup(GroupDto groupDto) {
-        String username = SecurityUtil.getSessionUser().getUsername();
+        String username = SecurityUtil.getSessionUser();
         UserEntity user = userRepository.findByUsername(username);
         Group group = mapToGroup(groupDto);
         group.setCreatedBy(user);
@@ -50,7 +50,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public void updateGroup(GroupDto groupDto) {
-        String username = SecurityUtil.getSessionUser().getUsername();
+        String username = SecurityUtil.getSessionUser();
         UserEntity user = userRepository.findByUsername(username);
         Group group = mapToGroup(groupDto);
         group.setCreatedBy(user);

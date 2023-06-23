@@ -1,4 +1,4 @@
-package com.rungroop.web.security;
+package com.studygroup.web.security;
 
 import com.studygroup.web.models.UserEntity;
 import com.studygroup.web.repository.UserRepository;

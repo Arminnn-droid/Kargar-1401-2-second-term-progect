@@ -1,10 +1,12 @@
 package com.studygroup.web.controller;
 
-import com.studygroup.web.dto.GroupDto;
 import com.studygroup.web.dto.LessonDto;
 import com.studygroup.web.models.Lesson;
+import com.studygroup.web.models.UserEntity;
+import com.studygroup.web.security.SecurityUtil;
+import com.studygroup.web.service.GroupService;
 import com.studygroup.web.service.LessonService;
-import com.studygroup.web.service.impl.LessonServiceImpl;
+import com.studygroup.web.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +22,13 @@ import java.util.List;
 @Controller
 public class LessonController {
     private LessonService lessonService;
+    private UserService userService;
+    private GroupService groupService;
 
     @Autowired
-    public LessonController(LessonService lessonService) {
+    public LessonController(LessonService lessonService, UserService userService) {
         this.lessonService = lessonService;
+        this.userService = userService;
     }
 
     @GetMapping("/lessons/{groupId}/new")
@@ -42,14 +47,29 @@ public class LessonController {
 
     @GetMapping("/lessons")
     public String lessonList(Model model){
+        UserEntity user = new UserEntity();
         List<LessonDto> lessons = lessonService.findAllLessons();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userService.findByUsername(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("user", user);
         model.addAttribute("lessons", lessons);
         return "lessons-list";
     }
 
     @GetMapping("/lessons/{lessonId}/")
     public String viewLesson(@PathVariable("lessonId") Long lessonId, Model model){
+        UserEntity user = new UserEntity();
         LessonDto lesson = lessonService.findByLessonId(lessonId);
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userService.findByUsername(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("group", lesson.getGroup());
+        model.addAttribute("user", user);
         model.addAttribute("lesson", lesson);
         return "lesson-detail";
     }

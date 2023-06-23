@@ -1,5 +1,6 @@
 package com.studygroup.web.dto;
 
+import com.studygroup.web.models.UserEntity;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +21,5 @@ public class GroupDto {
     private LocalDateTime createdOn;
     private LocalDateTime updatedOn;
     private List<LessonDto> lessons;
+    private UserEntity createdBy;
 }

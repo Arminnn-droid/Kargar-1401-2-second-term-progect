@@ -2,7 +2,10 @@ package com.studygroup.web.controller;
 
 import com.studygroup.web.dto.GroupDto;
 import com.studygroup.web.models.Group;
+import com.studygroup.web.models.UserEntity;
+import com.studygroup.web.security.SecurityUtil;
 import com.studygroup.web.service.GroupService;
+import com.studygroup.web.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,15 +18,24 @@ import java.util.List;
 @Controller
 public class GroupController {
     private GroupService groupService;
+    private UserService userService;
 
     @Autowired
-    public GroupController(GroupService groupService) {
+    public GroupController(GroupService groupService, UserService userService) {
+        this.userService = userService;
         this.groupService = groupService;
     }
 
     @GetMapping("/groups")
     public String listGroups(Model model){
+        UserEntity user = new UserEntity();
         List<GroupDto> groups = groupService.findAllGroups();
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userService.findByUsername(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("user", user);
         model.addAttribute("groups", groups);
         return "groups-list";
     }
@@ -67,7 +79,14 @@ public class GroupController {
 
     @GetMapping("/groups/{groupId}")
     public String groupDetail(@PathVariable("groupId") long groupId, Model model){
+        UserEntity user = new UserEntity();
         GroupDto groupDto = groupService.findGroupById(groupId);
+        String username = SecurityUtil.getSessionUser();
+        if(username != null) {
+            user = userService.findByUsername(username);
+            model.addAttribute("user", user);
+        }
+        model.addAttribute("user", user);
         model.addAttribute("group", groupDto);
         return "groups-detail";
     }

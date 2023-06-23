@@ -16,6 +16,7 @@ public class GroupMapper {
                 .photoUrl(group.getPhotoUrl())
                 .content(group.getContent())
                 .createdOn(group.getCreatedOn())
+                .createdBy(group.getCreatedBy())
                 .updatedOn(group.getUpdatedOn())
                 .build();
         return groupDto;
@@ -28,6 +29,7 @@ public class GroupMapper {
                 .photoUrl(group.getPhotoUrl())
                 .content(group.getContent())
                 .createdOn(group.getCreatedOn())
+                .createdBy(group.getCreatedBy())
                 .updatedOn(group.getUpdatedOn())
                 .lessons(group.getLessons().stream().map((lesson) -> mapToLessonDto(lesson)).collect(Collectors.toList()))
                 .build();
