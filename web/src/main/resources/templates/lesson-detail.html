@@ -27,6 +27,9 @@
                         <div class="small text-muted" th:text="${lesson.createdOn}"></div>
                         <h2 class="card-title">About this lesson</h2>
                         <p class="card-text" th:text="${lesson.lecture}"></p>
+                        <div th:if="${user.id} == ${lesson.group.createdBy.id}">
+                            <a class="btn btn-primary" th:href="@{/lessons/{lessonId}/delete(lessonId=${lesson.id})}">Delete</a>
+                        </div>
                     </div>
                 </div>
                 <!-- Side widgets-->

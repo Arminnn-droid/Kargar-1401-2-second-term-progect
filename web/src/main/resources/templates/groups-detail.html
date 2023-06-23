@@ -28,8 +28,10 @@
             <div class="small text-muted" th:text="${group.createdOn}"></div>
             <h2 class="card-title">About this study group</h2>
             <p class="card-text" th:text="${group.content}"></p>
+            <div th:if="${user.id} == ${group.createdBy.id}">
               <a class="btn btn-primary" th:href="@{/groups/{groupId}/delete(groupId=${group.id})}">Delete</a>
               <a class="btn btn-primary" th:href="@{/lessons/{groupId}/new(groupId=${group.id})}">Create lesson</a>
+              </div>
           </div>
         </div>
         <!-- Nested row for non-featured blog posts-->
